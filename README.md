@@ -1,26 +1,3 @@
-# Soroban Project
-
-## Project Structure
-
-This repository uses the recommended structure for a Soroban project:
-
-```text
-.
-├── contracts
-│   └── hello_world
-│       ├── src
-│       │   ├── lib.rs
-│       │   └── test.rs
-│       └── Cargo.toml
-├── Cargo.toml
-└── README.md
-```
-
-- New Soroban contracts can be put in `contracts`, each in their own directory. There is already a `hello_world` contract in there to get you started.
-- If you initialized this project with any other example contracts via `--with-example`, those contracts will be in the `contracts` directory as well.
-- Contracts should have their own `Cargo.toml` files that rely on the top-level `Cargo.toml` workspace for their dependencies.
-- Frontend libraries can be added to the top-level directory as well. If you initialized this project with a frontend template via `--frontend-template` you will have those files already included.
-
 # NFT Marketplace
 
 ## Project Title
@@ -31,6 +8,20 @@ This repository uses the recommended structure for a Soroban project:
 
 The NFT Marketplace is a decentralized platform built on the Stellar blockchain using Soroban SDK that enables users to mint, buy, sell, and trade Non-Fungible Tokens (NFTs). This smart contract provides a secure and transparent marketplace where creators can mint their digital assets as NFTs and collectors can discover, purchase, and trade unique digital items. The platform ensures ownership verification, transparent pricing, and seamless transactions through blockchain technology.
 
+## 🎯 Overview
+
+The **NFT Marketplace** is a decentralized platform built on the Stellar blockchain using the Soroban SDK. It enables creators to mint their digital assets as NFTs and allows collectors to discover, purchase, and trade unique digital items. The platform ensures ownership verification, transparent pricing, and seamless blockchain transactions.
+
+### Project Vision
+
+> Democratize the NFT ecosystem by creating an accessible, user-friendly, and secure marketplace that empowers digital creators and collectors worldwide.
+
+- 🎨 **Empower Creators**  Provide artists and content creators a platform to tokenize and monetize their digital work
+- 🔒 **Build Trust** Leverage blockchain technology for transparent ownership records and secure transactions
+- 🌐 **Foster Community**  Create a vibrant ecosystem where creators and collectors connect, trade, and collaborate
+- ⚡ **Drive Innovation**  Continuously evolve the platform with cutting-edge blockchain features
+
+
 ## Project Vision
 
 Our vision is to democratize the NFT ecosystem by creating an accessible, user-friendly, and secure marketplace that empowers digital creators and collectors worldwide. We aim to:
@@ -40,6 +31,102 @@ Our vision is to democratize the NFT ecosystem by creating an accessible, user-f
 - **Foster Community**: Create a vibrant ecosystem where creators and collectors can connect, trade, and collaborate
 - **Drive Innovation**: Continuously evolve the platform with cutting-edge features that enhance the NFT trading experience
 - **Promote Accessibility**: Make NFT creation and trading simple and accessible to users of all technical backgrounds
+
+## 📁 Project Structure
+
+```
+NFTMarketplace/
+├── contracts/
+│   └── hello-world/               # Soroban smart contract (Rust)
+│       ├── src/
+│       │   ├── lib.rs             # Main contract logic (mint, list, buy, stats)
+│       │   └── test.rs            # Unit tests for contract functions
+│       └── Cargo.toml             # Contract-level dependencies
+│
+├── frontend/                      # Frontend web application
+│   ├── index.html                 # Main HTML entry point
+│   ├── styles/                    # CSS styling files
+│   └── scripts/                   # JavaScript for wallet + contract interaction
+│
+├── Cargo.toml                     # Root workspace Cargo config
+├── Cargo.lock                     # Dependency lock file
+├── contracts.code-workspace       # VS Code workspace settings
+├── .gitignore                     # Git ignore rules
+├── image.png                      # Contract deployment screenshot
+├── frontend.png                   # Frontend UI screenshot
+├── listing.png                    # NFT listing screenshot
+└── README.md                      # Project documentation
+```
+
+## 🏗️ Architecture
+
+### Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Blockchain | Stellar Testnet |
+| Smart Contract | Rust (Soroban SDK) |
+| Frontend | HTML, CSS, JavaScript |
+| Authentication | Address-based ownership verification |
+| Storage | On-chain decentralized storage |
+| Build Tool | Cargo (Rust) |
+
+### System Architecture
+
+```
+┌──────────────────────────────────────────────────────┐
+│                    Frontend (HTML/JS)                 │
+│         Wallet Connect · Mint · Buy · List UI        │
+└───────────────────────┬──────────────────────────────┘
+                        │  RPC Calls (Soroban CLI / SDK)
+┌───────────────────────▼──────────────────────────────┐
+│              Soroban Smart Contract (Rust)            │
+│   mint_nft · list_nft · buy_nft · get_stats          │
+└───────────────────────┬──────────────────────────────┘
+                        │  Ledger Entries
+┌───────────────────────▼──────────────────────────────┐
+│             Stellar Blockchain (Testnet)              │
+│   Immutable NFT Records · Ownership State · Txns     │
+└──────────────────────────────────────────────────────┘
+```
+### Core Components
+
+1. **Smart Contract (Soroban / Rust)**
+   - Handles all on-chain NFT logic
+   - Manages ownership, listing state, and sales
+   - Functions: `mint_nft`, `list_nft`, `buy_nft`, `get_marketplace_stats`
+   - Data stored: NFT ID, title, price, owner address, listing status
+
+2. **Frontend Application (HTML/CSS/JS)**
+   - Browser-based UI for interacting with the marketplace
+   - Connects to Stellar wallet for signing transactions
+   - Displays NFT listings, minting forms, and marketplace analytics
+
+3. **Stellar Blockchain (Testnet)**
+   - Provides the decentralized ledger for all NFT records
+   - Ensures immutability of ownership and transaction history
+   - All contract state is stored on-chain
+
+---
+### On-Chain Data Model
+
+```rust
+pub struct NFT {
+    pub id: u64,
+    pub title: String,
+    pub owner: Address,
+    pub price: u64,
+    pub is_listed: bool,
+}
+
+pub struct MarketplaceStats {
+    pub total_minted: u64,
+    pub total_listed: u64,
+    pub total_sold: u64,
+}
+```
+
+---
 
 ## Key Features
 
@@ -178,4 +265,36 @@ soroban contract invoke \
 ## Contract details
 
 Contract id: CBL7DYK4CTGWZBWNHDDYHWXP32C2NIDFXGP3GYHCWCBAC3JV5UATET2V
+
+
+---
+
+## 🔗 Contract Details
+
+| Field | Value |
+|---|---|
+| Contract ID | `CBL7DYK4CTGWZBWNHDDYHWXP32C2NIDFXGP3GYHCWCBAC3JV5UATET2V` |
+| Network | Stellar Testnet |
+| Language | Rust (Soroban SDK) |
+| Build Tool | Cargo |
 ![alt text](image.png)
+
+---
+
+### Frontend UI
+![Frontend Interface](./frontend.png)
+![Frontend Interface](./listing.png)
+
+---
+
+## 📝 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+Developed by [@anasdsce](https://github.com/anasdsce)
+
+---
+
+> **Built with ❤️ on the Stellar Blockchain using Soroban Smart Contracts**
